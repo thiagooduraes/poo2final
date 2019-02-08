@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+    
+    <managed-bean>
+    	<managed-bean-name>medicoBean</managed-bean-name>
+    	<managed-bean-class>br.edu.ifnmg.clinica.bean.MedicoBean</managed-bean-class>
+    	<managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+    	<managed-bean-name>especialidadeBean</managed-bean-name>
+    	<managed-bean-class>br.edu.ifnmg.clinica.bean.EspecialidadeBean</managed-bean-class>
+    	<managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+    	<managed-bean-name>convenioBean</managed-bean-name>
+    	<managed-bean-class>br.edu.ifnmg.clinica.bean.ConvenioBean</managed-bean-class>
+    	<managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+    	<managed-bean-name>pacienteBean</managed-bean-name>
+    	<managed-bean-class>br.edu.ifnmg.clinica.bean.PacienteBean</managed-bean-class>
+    	<managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+
+</faces-config>

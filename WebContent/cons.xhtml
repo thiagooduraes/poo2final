@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Nova consulta</title>
+	<h:outputStylesheet
+		name="webjars/font-awesome/4.4.0/css/font-awesome.css"></h:outputStylesheet>
+</h:head>
+<h:body>
+	<h:form>
+		<div class="ui-fluid">
+			<div class="ui-g" style="margin-top: 20px;">
+				<div class="ui-g-12 ui-md-2">
+					<p:menu toggleable="true">
+						<p:separator />
+						<p:menuitem value="HOME" url="index.xhtml" icon="fa fa-home" />
+						<p:submenu label="Especialidades" icon="fa fa-graduation-cap">
+							<p:menuitem value="Nova" url="esp.xhtml"
+								icon="fa fa-share-square-o" />
+							<p:menuitem value="Pesquisar" url="esp_search.xhtml"
+								icon="fa fa-search" />
+						</p:submenu>
+						<p:submenu label="Médicos" icon="fa fa-stethoscope">
+							<p:menuitem value="Novo" url="med.xhtml"
+								icon="fa fa-share-square-o" />
+							<p:menuitem value="Pesquisar" url="med_search.xhtml"
+								icon="fa fa-search" />
+						</p:submenu>
+						<p:submenu label="Convênios" icon="fa fa-briefcase">
+							<p:menuitem value="Novo" url="conv.xhtml"
+								icon="fa fa-share-square-o" />
+							<p:menuitem value="Pesquisar" url="conv_search.xhtml"
+								icon="fa fa-search" />
+						</p:submenu>
+						<p:submenu label="Pacientes" icon="fa fa-group">
+							<p:menuitem value="Nova" url="pac.xhtml"
+								icon="fa fa-share-square-o" />
+							<p:menuitem value="Pesquisar" url="pac_search.xhtml"
+								icon="fa fa-search" />
+						</p:submenu>
+						<p:submenu label="Consultas" icon="fa fa-pencil-square-o">
+							<p:menuitem value="Novo" url="cons.xhtml"
+								icon="fa fa-share-square-o" />
+							<p:menuitem value="Pesquisar" url="cons_search.xhtml"
+								icon="fa fa-search" />
+						</p:submenu>
+					</p:menu>
+				</div>
+
+				<div class="ui-g-12 ui-md-10 ui-g-nopad">
+					<div class="ui-g-12 ui-g-nopad">
+						<p:panel header="Consulta">
+							<p:messages />
+							<h:panelGrid columns="4" cellpadding="5">
+
+								<p:outputLabel for="data_consulta" value="Data da consulta" />
+								<p:calendar id="data_consulta" pattern="dd-MM-yyyy" mask="true"
+									value="#{consultaBean.consulta.data_consulta}" required="true"
+									navigation="true" />
+								<h:outputText value="#{consultaBean.consulta.data_consulta}" />
+
+								<h:outputText value="&#10;" />
+								<p:outputLabel for="diagnostico" value="Diagnostico: " />
+								<p:inputText id="diagnostico"
+									value="#{consultaBean.consulta.diagnostico}"
+									label="diagnostico" required="true"
+									requiredMessage="diagnostico obrigatório" />
+								<p:message for="diagnostico" />
+								<h:outputText value="#{consultaBean.consulta.diagnostico}" />
+
+								<p:outputLabel for="preco" value="Preco: " />
+								<p:inputNumber id="preco" value="#{consultaBean.consulta.preco}"
+									decimalPlaces="2" label="Preco" required="true"
+									requiredMessage="Preco obrigatório" />
+								<p:message for="preco" />
+								<h:outputText value="#{consultaBean.consulta.preco}" />
+
+								<p:outputLabel for="tratamento" value="Tratamento: " />
+								<p:inputText id="tratamento"
+									value="#{consultaBean.consulta.tratamento}" label="tratamento"
+									required="true" requiredMessage="Tratamento obrigatório" />
+								<p:message for="tratamento" />
+								<h:outputText value="#{consultaBean.consulta.tratamento}" />
+
+								<p:outputLabel for="medico" value="Médico: " />
+								<p:selectOneMenu id="medico"
+									value="#{consultaBean.consulta.medico}" required="true">
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems value="#{consultaBean.medicos}" var="med"
+										itemLabel="#{med.nome}" itemValue="#{med}" />
+								</p:selectOneMenu>
+
+								<h:outputText value="&#10;" />
+								<h:outputText value="&#10;" />
+								<p:outputLabel for="paciente" value="Paciente: " />
+								<p:selectOneMenu id="paciente"
+									value="#{consultaBean.consulta.paciente}" required="true">
+									<f:selectItem noSelectionOption="true" />
+									<f:selectItems value="#{consultaBean.pacientes}" var="pac"
+										itemLabel="#{pac.nome}" itemValue="#{pac}" />
+								</p:selectOneMenu>
+
+							</h:panelGrid>
+
+							<p:commandButton value="Salvar"
+								action="#{consultaBean.salvarconsulta()}" />
+						</p:panel>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</h:body>
+</html>

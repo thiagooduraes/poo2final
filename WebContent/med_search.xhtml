@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Médicos</title>
+	<h:outputStylesheet
+		name="webjars/font-awesome/4.4.0/css/font-awesome.css"></h:outputStylesheet>
+</h:head>
+<h:body>
+	<h:form id="form">
+		<p:growl id="msgs" showDetail="true" />
+		<div class="ui-fluid">
+			<div class="ui-g" style="margin-top: 20px;">
+				<div class="ui-g-12 ui-md-2">
+					<p:menu toggleable="true">
+						<p:separator />
+						<p:menuitem value="HOME" url="index.xhtml" icon="fa fa-home" />
+						<p:submenu label="Especialidades" icon="fa fa-graduation-cap">
+							<p:menuitem value="Nova" url="esp.xhtml"
+								icon="fa fa-share-square-o" />
+							<p:menuitem value="Pesquisar" url="esp_search.xhtml"
+								icon="fa fa-search" />
+						</p:submenu>
+						<p:submenu label="Médicos" icon="fa fa-stethoscope">
+							<p:menuitem value="Novo" url="med.xhtml"
+								icon="fa fa-share-square-o" />
+							<p:menuitem value="Pesquisar" url="med_search.xhtml"
+								icon="fa fa-search" />
+						</p:submenu>
+						<p:submenu label="Convênios" icon="fa fa-briefcase">
+							<p:menuitem value="Novo" url="conv.xhtml"
+								icon="fa fa-share-square-o" />
+							<p:menuitem value="Pesquisar" url="conv_search.xhtml"
+								icon="fa fa-search" />
+						</p:submenu>
+						<p:submenu label="Pacientes" icon="fa fa-group">
+							<p:menuitem value="Nova" url="pac.xhtml"
+								icon="fa fa-share-square-o" />
+							<p:menuitem value="Pesquisar" url="pac_search.xhtml"
+								icon="fa fa-search" />
+						</p:submenu>
+						<p:submenu label="Consultas" icon="fa fa-pencil-square-o">
+							<p:menuitem value="Novo" url="cons.xhtml"
+								icon="fa fa-share-square-o" />
+							<p:menuitem value="Pesquisar" url="cons_search.xhtml"
+								icon="fa fa-search" />
+						</p:submenu>
+					</p:menu>
+				</div>
+
+				<div class="ui-g-12 ui-md-10 ui-g-nopad">
+					<div class="ui-g-12 ui-g-nopad">
+						<p:dataTable var="med"
+							value="#{medicoBean.medicos}" editable="true"
+							style="margin-bottom:20px">
+							<f:facet name="header">
+           						Médicos
+       						</f:facet>
+							
+							<p:ajax event="rowEdit" listener="#{medicoBean.onRowEdit()}" action="#{medicoBean.editarMedico(med.id)}"
+								update=":form:msgs" />
+
+							<p:ajax event="rowEditCancel"
+								listener="#{medicoBean.onRowCancel()}" update=":form:msgs" />
+								
+								
+							<p:column headerText="Id">
+								<h:outputText value="#{med.id}" />
+							</p:column>
+							<p:column headerText="Nome">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{med.nome}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{med.nome}" style="width:100%" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column headerText="CRM">
+								<h:outputText value="#{med.crm}" />
+							</p:column>
+							<p:column headerText="CPF">
+								<h:outputText value="#{med.cpf}" />
+							</p:column>
+							<p:column headerText="Endereço">
+								<h:outputText value="#{med.endereco}" />
+							</p:column>
+							<p:column headerText="Telefone">
+								<h:outputText value="#{med.telefone}" />
+							</p:column>
+							<p:column headerText="Especialidade">
+								<h:outputText value="#{med.especialidade.nome}" />
+							</p:column>
+							
+							
+							<p:column style="width:20px">
+								<p:commandLink title="Remover" id="btnRemover" update=":form:msgs"
+									styleClass="fa fa-remove"
+									action="#{especialidadeBean.removeEspecialidade(espec.id)}"
+									style="display:inline-block">
+									<p:confirm header="Confirmação" message="Você deseja excluir?"
+										icon="fa fa-exclamation-triangle" />
+								</p:commandLink>
+
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="Sim" type="button"
+										styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+									<p:commandButton value="Não" type="button"
+										styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+								</p:confirmDialog>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+</h:body>
+</html>

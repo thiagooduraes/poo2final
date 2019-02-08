@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<style type="text/css">
+.imagebox a {
+	margin-left: 10px;
+}
+</style>
+
+	<h:form id="form">
+		<p:growl id="msgs" showDetail="true" />
+		<div class="ui-fluid">
+			<div class="ui-g" style="margin-top: 20px;">
+				<div class="ui-g-12 ui-md-2">
+					<p:menu toggleable="true">
+						<p:separator />
+						<p:menuitem value="Confirm Dialog" url="esp_search.xhtml"
+							icon="fa fa-search" />
+						<p:menuitem value="Overlay Panel" url="med.xhtml"
+							icon="fa fa-share-square-o" />
+					</p:menu>
+				</div>
+
+				<div class="ui-g-12 ui-md-10 ui-g-nopad">
+					<div class="ui-g-12 ui-g-nopad">
+
+
+						<h3 style="margin-top: 0">LightBox</h3>
+
+						<p:lightBox styleClass="imagebox" id="lighbox1">
+							<h:outputLink value="imagens/imagem01.jpg" title="Férias...">
+								<h:graphicImage value="imagens/imagem01.jpg" id="nature1"
+									style="height: 77px; width: 100px" />
+							</h:outputLink>
+
+							<h:outputLink value="imagens/imagem02.jpg"
+								title="Tranqulidade...">
+								<h:graphicImage value="imagens/imagem02.jpg" id="nature2"
+									style="height: 77px; width: 100px" />
+							</h:outputLink>
+
+							<h:outputLink value="imagens/imagem03.jpg"
+								title="Vem Monstro, vem comigo que você vai se dar bem!">
+								<h:graphicImage value="imagens/imagem03.jpg" id="nature3"
+									style="height: 77px; width: 100px" />
+							</h:outputLink>
+						</p:lightBox>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form>
+
+</h:body>
+</html>
