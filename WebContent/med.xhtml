@@ -90,12 +90,15 @@
 								<h:outputText value="#{medicoBean.med.telefone}" />
 
 								<p:outputLabel for="campoEspec" value="Especialidade: " />
-								<p:selectOneMenu id="campoEspec"
-									value="#{medicoBean.especialidade}" required="true" converter="especialidadeConverter" converterMessage="Conversao fail">
-									<f:selectItem itemValue="" itemLabel="--Selecione--"/>
-									<f:selectItems value="#{medicoBean.especialidades}" var="esp"
-										itemLabel="#{esp.nome}" itemValue="#{esp}" />
-								</p:selectOneMenu>
+								<p:inputText id="campoEspec" value="#{medicoBean.esp_id_str}"
+									label="especialidade" required="true"
+									requiredMessage="Especialidade obrigatória" />
+<!-- 								<p:selectOneMenu id="campoEspec" -->
+<!-- 									value="#{medicoBean.especialidade}" required="true" converter="especialidadeConverter" converterMessage="Conversao fail"> -->
+<!-- 									<f:selectItem itemValue="" itemLabel="Selecione"/> -->
+<!-- 									<f:selectItems value="#{medicoBean.especialidades}" var="esp" -->
+<!-- 										itemLabel="#{esp.nome}" itemValue="#{esp}" /> -->
+<!-- 								</p:selectOneMenu> -->
 								
 								<p:commandButton id="btnSalvarmed" ajax="false" value="Salvar"
 									actionListener="#{medicoBean.salvarMedico()}" />

@@ -91,12 +91,15 @@
 
 								<h:outputText value="&#10;" />
 								<p:outputLabel for="campoConv" value="Convênio: " />
-								<p:selectOneMenu id="campoConv"
-									value="#{pacienteBean.pac.convenio}" required="true">
-									<f:selectItem noSelectionOption="true" />
-									<f:selectItems value="#{pacienteBean.convenios}" var="conv"
-										itemLabel="#{conv.nome}" itemValue="#{conv}" />
-								</p:selectOneMenu>
+								<p:inputText id="campoConv" value="#{pacienteBean.conv_id_str}"
+									label="convenio" required="true"
+									requiredMessage="Convenio obrigatório" />
+<!-- 								<p:selectOneMenu id="campoConv" -->
+<!-- 									value="#{pacienteBean.pac.convenio}" required="true"> -->
+<!-- 									<f:selectItem noSelectionOption="true" /> -->
+<!-- 									<f:selectItems value="#{pacienteBean.convenios}" var="conv" -->
+<!-- 										itemLabel="#{conv.nome}" itemValue="#{conv}" /> -->
+<!-- 								</p:selectOneMenu> -->
 
 							</h:panelGrid>
 

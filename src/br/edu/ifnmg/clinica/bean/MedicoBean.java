@@ -35,6 +35,10 @@ public class MedicoBean {
 
 	@Inject
 	private Especialidade especialidade;
+	
+	private Long esp_id;
+	
+	private String esp_id_str;
 
 	private List<Especialidade> especialidades;
 
@@ -91,11 +95,32 @@ public class MedicoBean {
 		this.med = med;
 	}
 
+	public Long getEsp_id() {
+		return esp_id;
+	}
+
+	public void setEsp_id(String str_id) {
+		this.esp_id = Long.parseLong(str_id);
+	}
+
+	public String getEsp_id_str() {
+		return esp_id_str;
+	}
+
+	public void setEsp_id_str(String esp_id_str) {
+		this.esp_id_str = esp_id_str;
+	}
+
 	public String salvarMedico() {
+		this.setEsp_id(this.esp_id_str);
+		this.especialidade.setId(this.esp_id);
+		TypedQuery<Especialidade> tq = em.createNamedQuery("findEspecialidade", Especialidade.class);
+		tq.setParameter("id", this.esp_id);
+		Especialidade espec = tq.getSingleResult();
 		try {
 			ut.begin();
-			em.merge(especialidade);
-			med.setEspecialidade(especialidade);
+			em.merge(espec);
+			med.setEspecialidade(espec);
 			em.persist(med);
 			ut.commit();
 		} catch (SecurityException | IllegalStateException | RollbackException | HeuristicMixedException

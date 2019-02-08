@@ -7,11 +7,9 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
@@ -19,9 +17,6 @@ import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.primefaces.context.RequestContext;
 
@@ -39,10 +34,14 @@ public class PacienteBean {
 	@Inject
 	private Convenio convenio;
 
+	private Long conv_id;
+
+	private String conv_id_str;
+
 	private List<Convenio> convenios;
-	
+
 	private List<Paciente> pacientes;
-	
+
 	@Resource
 	UserTransaction ut;
 
@@ -55,14 +54,14 @@ public class PacienteBean {
 	private List<Convenio> listaConv() {
 		TypedQuery<Convenio> tq = em.createNamedQuery("listarConvenios", Convenio.class);
 		return tq.getResultList();
-//		try {
-//			Query query = em.createQuery("select e from Convenio e");
-//			@SuppressWarnings("unchecked")
-//			List<Convenio> conv = query.getResultList();
-//			return conv;
-//		} catch (Exception e) {
-//			return null;
-//		}
+		// try {
+		// Query query = em.createQuery("select e from Convenio e");
+		// @SuppressWarnings("unchecked")
+		// List<Convenio> conv = query.getResultList();
+		// return conv;
+		// } catch (Exception e) {
+		// return null;
+		// }
 	}
 
 	public List<Paciente> getPacientes() {
@@ -96,26 +95,46 @@ public class PacienteBean {
 	public void setConvenios(List<Convenio> convenios) {
 		this.convenios = convenios;
 	}
-	
+
+	public Long getConv_id() {
+		return conv_id;
+	}
+
+	public void setConv_id(String str_id) {
+		this.conv_id = Long.parseLong(str_id);
+	}
+
+	public String getConv_id_str() {
+		return conv_id_str;
+	}
+
+	public void setConv_id_str(String conv_id_str) {
+		this.conv_id_str = conv_id_str;
+	}
+
 	public List<Paciente> listapac() {
 		TypedQuery<Paciente> tq = em.createNamedQuery("listarPacientes", Paciente.class);
 		return tq.getResultList();
-//		try {
-//			Query query = em.createQuery("select e from Paciente e");
-//			@SuppressWarnings("unchecked")
-//			List<Paciente> pac = query.getResultList();
-//			return pac;
-//		} catch (Exception e) {
-//			return null;
-//		}
+		// try {
+		// Query query = em.createQuery("select e from Paciente e");
+		// @SuppressWarnings("unchecked")
+		// List<Paciente> pac = query.getResultList();
+		// return pac;
+		// } catch (Exception e) {
+		// return null;
+		// }
 	}
-	
-	public String salvarPaciente() {
 
-		System.out.println("asdkjbashdga");
-		pac.setConvenio(convenio);
+	public String salvarPaciente() {
+		this.setConv_id(conv_id_str);
+		this.convenio.setId(this.conv_id);
+		TypedQuery<Convenio> tq = em.createNamedQuery("findConvenio", Convenio.class);
+		tq.setParameter("id", this.conv_id);
+		Convenio conv = tq.getSingleResult();
 		try {
 			ut.begin();
+			em.merge(conv);
+			pac.setConvenio(conv);
 			em.merge(pac);
 			ut.commit();
 		} catch (SecurityException | IllegalStateException | RollbackException | HeuristicMixedException
