@@ -2,16 +2,15 @@ package br.edu.ifnmg.clinica.bean;
 
 import java.util.List;
 
+import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -19,16 +18,13 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.primefaces.context.RequestContext;
 
 import br.edu.ifnmg.clinica.model.Consulta;
 import br.edu.ifnmg.clinica.model.Medico;
 import br.edu.ifnmg.clinica.model.Paciente;
 
-@ManagedBean(name = "consultaBean")
+@ManagedBean
 public class ConsultaBean {
 	@PersistenceContext(unitName = "final")
 	private EntityManager em;
@@ -41,6 +37,14 @@ public class ConsultaBean {
 
 	@Inject
 	private Medico medico;
+	
+	private Long med_id;
+	
+	private String med_id_str;
+	
+	private Long pac_id;
+	
+	private String pac_id_str;
 
 	private List<Consulta> consultas;
 
@@ -74,37 +78,75 @@ public class ConsultaBean {
 		this.pacientes = pacientes;
 	}
 	
+	public Long getMed_id() {
+		return med_id;
+	}
+
+	public void setMed_id(String str) {
+		this.med_id = Long.parseLong(str);
+	}
+
+	public String getMed_id_str() {
+		return med_id_str;
+	}
+
+	public void setMed_id_str(String med_id_str) {
+		this.med_id_str = med_id_str;
+	}
+
+	public Long getPac_id() {
+		return pac_id;
+	}
+
+	public void setPac_id(String str) {
+		this.pac_id = Long.parseLong(str);
+	}
+
+	public String getPac_id_str() {
+		return pac_id_str;
+	}
+
+	public void setPac_id_str(String pac_id_str) {
+		this.pac_id_str = pac_id_str;
+	}
+
 	private List<Consulta> listaCons() {
-		try {
-			Query query = em.createQuery("select e from Consulta e");
-			@SuppressWarnings("unchecked")
-			List<Consulta> cons = query.getResultList();
-			return cons;
-		} catch (Exception e) {
-			return null;
-		}
+		TypedQuery<Consulta> tq = em.createNamedQuery("listarConsultas", Consulta.class);
+		return tq.getResultList();
+//		try {
+//			Query query = em.createQuery("select e from Consulta e");
+//			@SuppressWarnings("unchecked")
+//			List<Consulta> cons = query.getResultList();
+//			return cons;
+//		} catch (Exception e) {
+//			return null;
+//		}
 	}
 
 	private List<Paciente> listaPac() {
-		try {
-			Query query = em.createQuery("select e from Paciente e");
-			@SuppressWarnings("unchecked")
-			List<Paciente> pac = query.getResultList();
-			return pac;
-		} catch (Exception e) {
-			return null;
-		}
+		TypedQuery<Paciente> tq = em.createNamedQuery("listarPacientes", Paciente.class);
+		return tq.getResultList();
+//		try {
+//			Query query = em.createQuery("select e from Paciente e");
+//			@SuppressWarnings("unchecked")
+//			List<Paciente> pac = query.getResultList();
+//			return pac;
+//		} catch (Exception e) {
+//			return null;
+//		}
 	}
 	
 	private List<Medico> listaMed() {
-		try {
-			Query query = em.createQuery("select e from Medico e");
-			@SuppressWarnings("unchecked")
-			List<Medico> med = query.getResultList();
-			return med;
-		} catch (Exception e) {
-			return null;
-		}
+		TypedQuery<Medico> tq = em.createNamedQuery("listarMedicos", Medico.class);
+		return tq.getResultList();
+//		try {
+//			Query query = em.createQuery("select e from Medico e");
+//			@SuppressWarnings("unchecked")
+//			List<Medico> med = query.getResultList();
+//			return med;
+//		} catch (Exception e) {
+//			return null;
+//		}
 	}
 	
 	public Consulta getConsulta() {
@@ -140,10 +182,23 @@ public class ConsultaBean {
 	}
 	
 	public String salvarconsulta() {
-		consulta.setPaciente(paciente);
-		consulta.setMedico(medico);
+		this.setMed_id(this.med_id_str);
+		this.medico.setId(this.med_id);
+		TypedQuery<Medico> tq = em.createNamedQuery("findMedico", Medico.class);
+		tq.setParameter("id", this.med_id);
+		Medico medic = tq.getSingleResult();
+		
+		this.setPac_id(this.pac_id_str);
+		this.paciente.setId(this.pac_id);
+		TypedQuery<Paciente> tq2 = em.createNamedQuery("findPaciente", Paciente.class);
+		tq2.setParameter("id", this.med_id);
+		Paciente pac = tq2.getSingleResult();
 		try {
 			ut.begin();
+			em.merge(medic);
+			consulta.setMedico(medic);
+			em.merge(pac);
+			consulta.setPaciente(pac);
 			em.merge(consulta);
 			ut.commit();
 		} catch (SecurityException | IllegalStateException | RollbackException | HeuristicMixedException
@@ -156,8 +211,8 @@ public class ConsultaBean {
 		RequestContext.getCurrentInstance().update("growl");
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucess!", "Medico cadastrada com sucesso"));
-		return "pac.xhtml?faces-redirect=true";
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucess!", "Consulta cadastrada com sucesso"));
+		return "cons.xhtml?faces-redirect=true";
 	}
 
 }

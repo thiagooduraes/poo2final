@@ -1,6 +1,6 @@
 package br.edu.ifnmg.clinica.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "listarConsultas", query = "select e from Consulta e"),
+	@NamedQuery(name = "findConsulta", query = "select e from Consulta e where e.id = :id")
+})
 public class Consulta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -86,27 +86,68 @@
 								<p:message for="tratamento" />
 								<h:outputText value="#{consultaBean.consulta.tratamento}" />
 
-								<p:outputLabel for="medico" value="Médico: " />
-								<p:selectOneMenu id="medico"
-									value="#{consultaBean.consulta.medico}" required="true">
-									<f:selectItem noSelectionOption="true" />
-									<f:selectItems value="#{consultaBean.medicos}" var="med"
-										itemLabel="#{med.nome}" itemValue="#{med}" />
-								</p:selectOneMenu>
+								<p:outputLabel for="campoMedico" value="Médico: " />
+								<p:inputText id="campoMedico" value="#{consultaBean.med_id_str}"
+									label="medico" required="true"
+									requiredMessage="Médico obrigatório" />
+								<p:commandButton id="overlayMed" icon="fa fa-search"
+									type="button" />
 
-								<h:outputText value="&#10;" />
-								<h:outputText value="&#10;" />
-								<p:outputLabel for="paciente" value="Paciente: " />
-								<p:selectOneMenu id="paciente"
-									value="#{consultaBean.consulta.paciente}" required="true">
-									<f:selectItem noSelectionOption="true" />
-									<f:selectItems value="#{consultaBean.pacientes}" var="pac"
-										itemLabel="#{pac.nome}" itemValue="#{pac}" />
-								</p:selectOneMenu>
+								<p:message for="campoMedico" />
+
+
+								<p:outputLabel for="campoPaciente" value="Paciente: " />
+								<p:inputText id="campoPaciente"
+									value="#{consultaBean.pac_id_str}" label="Paciente"
+									required="true" requiredMessage="Paciente obrigatória" />
+								<p:commandButton id="overlayPac" icon="fa fa-search"
+									type="button" />
+
+								<p:overlayPanel id="Panelmed" for="overlayMed" hideEffect="fade">
+									<p:dataTable var="meds" value="#{consultaBean.medicos}"
+										style="margin-bottom:20px">
+										<f:facet name="header">
+           									Médicos
+       									</f:facet>
+										<p:column headerText="Id">
+											<h:outputText value="#{meds.id}" />
+										</p:column>
+										<p:column headerText="Nome">
+											<h:outputText value="#{meds.nome}" />
+										</p:column>
+										<p:column headerText="CRM">
+											<h:outputText value="#{meds.crm}" />
+										</p:column>
+										<p:column headerText="Especialidade">
+											<h:outputText value="#{meds.especialidade.nome}" />
+										</p:column>
+									</p:dataTable>
+								</p:overlayPanel>
+
+								<p:overlayPanel id="Panelpac" for="overlayPac" hideEffect="fade">
+									<p:dataTable var="pacs" value="#{consultaBean.pacientes}"
+										style="margin-bottom:20px">
+										<f:facet name="header">
+           									Pacientes
+       									</f:facet>
+										<p:column headerText="Id">
+											<h:outputText value="#{pacs.id}" />
+										</p:column>
+										<p:column headerText="Nome">
+											<h:outputText value="#{pacs.nome}" />
+										</p:column>
+										<p:column headerText="CPF">
+											<h:outputText value="#{pacs.cpf}" />
+										</p:column>
+										<p:column headerText="Convênio">
+											<h:outputText value="#{pacs.convenio.nome}" />
+										</p:column>
+									</p:dataTable>
+								</p:overlayPanel>
 
 							</h:panelGrid>
 
-							<p:commandButton value="Salvar"
+							<p:commandButton value="Salvar" ajax="false"
 								action="#{consultaBean.salvarconsulta()}" />
 						</p:panel>
 					</div>

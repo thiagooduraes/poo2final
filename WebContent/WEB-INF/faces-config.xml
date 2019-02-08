@@ -25,5 +25,11 @@
     	<managed-bean-class>br.edu.ifnmg.clinica.bean.PacienteBean</managed-bean-class>
     	<managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+    
+    <managed-bean>
+    	<managed-bean-name>consultaBean</managed-bean-name>
+    	<managed-bean-class>br.edu.ifnmg.clinica.bean.ConsultaBean</managed-bean-class>
+    	<managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 
 </faces-config>

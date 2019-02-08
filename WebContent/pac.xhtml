@@ -58,8 +58,9 @@
 							<h:panelGrid columns="4" cellpadding="5">
 
 								<p:outputLabel for="cpf" value="CPF: " />
-								<p:inputMask  id="cpf" value="#{pacienteBean.pac.cpf}"
-								mask="999.999.999-99"	label="cpf" required="true" requiredMessage="CPF obrigatório" />
+								<p:inputMask id="cpf" value="#{pacienteBean.pac.cpf}"
+									mask="999.999.999-99" label="cpf" required="true"
+									requiredMessage="CPF obrigatório" />
 								<p:message for="cpf" />
 								<h:outputText value="#{pacienteBean.pac.cpf}" />
 
@@ -77,9 +78,9 @@
 								<h:outputText value="#{pacienteBean.pac.endereco}" />
 
 								<p:outputLabel for="telefone" value="Telefone: " />
-								<p:inputMask  id="telefone" value="#{pacienteBean.pac.telefone}"
-									label="telefone" required="true"
-									mask="(99) 999-9999" requiredMessage="Telefone obrigatório" />
+								<p:inputMask id="telefone" value="#{pacienteBean.pac.telefone}"
+									label="telefone" required="true" mask="(99) 999-9999"
+									requiredMessage="Telefone obrigatório" />
 								<p:message for="telefone" />
 								<h:outputText value="#{pacienteBean.pac.telefone}" />
 
@@ -94,17 +95,36 @@
 								<p:inputText id="campoConv" value="#{pacienteBean.conv_id_str}"
 									label="convenio" required="true"
 									requiredMessage="Convenio obrigatório" />
-<!-- 								<p:selectOneMenu id="campoConv" -->
-<!-- 									value="#{pacienteBean.pac.convenio}" required="true"> -->
-<!-- 									<f:selectItem noSelectionOption="true" /> -->
-<!-- 									<f:selectItems value="#{pacienteBean.convenios}" var="conv" -->
-<!-- 										itemLabel="#{conv.nome}" itemValue="#{conv}" /> -->
-<!-- 								</p:selectOneMenu> -->
+								<!-- 								<p:selectOneMenu id="campoConv" -->
+								<!-- 									value="#{pacienteBean.pac.convenio}" required="true"> -->
+								<!-- 									<f:selectItem noSelectionOption="true" /> -->
+								<!-- 									<f:selectItems value="#{pacienteBean.convenios}" var="conv" -->
+								<!-- 										itemLabel="#{conv.nome}" itemValue="#{conv}" /> -->
+								<!-- 								</p:selectOneMenu> -->
+								<p:commandButton id="overlayBtn" icon="fa fa-search"
+									type="button" />
+								<p:overlayPanel id="Panel" for="overlayBtn" hideEffect="fade">
+									<p:dataTable var="convs" value="#{pacienteBean.convenios}"
+										style="margin-bottom:20px">
+										<f:facet name="header">
+           									Convênios
+       									</f:facet>
+										<p:column headerText="Id">
+											<h:outputText value="#{convs.id}" />
+										</p:column>
+										<p:column headerText="Nome">
+											<h:outputText value="#{convs.nome}" />
+										</p:column>
+										<p:column headerText="Fornecedor">
+											<h:outputText value="#{convs.fornecedor}" />
+										</p:column>
+									</p:dataTable>
+								</p:overlayPanel>
 
 							</h:panelGrid>
 
-							<p:commandButton value="Salvar"
-								ajax="false" action="#{pacienteBean.salvarPaciente()}" />
+							<p:commandButton value="Salvar" ajax="false"
+								action="#{pacienteBean.salvarPaciente()}" />
 						</p:panel>
 					</div>
 				</div>

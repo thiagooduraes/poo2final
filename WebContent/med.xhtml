@@ -54,7 +54,7 @@
 					<div class="ui-g-12 ui-g-nopad">
 						<p:panel header="Médico">
 							<p:messages />
-							
+
 							<h:panelGrid columns="4" cellpadding="5">
 
 								<p:outputLabel for="crm" value="CRM: " />
@@ -71,7 +71,8 @@
 
 								<p:outputLabel for="cpf" value="CPF: " />
 								<p:inputMask id="cpf" value="#{medicoBean.med.cpf}" label="cpf"
-									mask="999.999.999-99" required="true" requiredMessage="CPF obrigatório" />
+									mask="999.999.999-99" required="true"
+									requiredMessage="CPF obrigatório" />
 								<p:message for="cpf" />
 								<h:outputText value="#{medicoBean.med.cpf}" />
 
@@ -84,8 +85,8 @@
 
 								<p:outputLabel for="telefone" value="Telefone: " />
 								<p:inputMask id="telefone" value="#{medicoBean.med.telefone}"
-									label="telefone" required="true"
-									mask="(99) 99999-9999" requiredMessage="Telefone obrigatório" />
+									label="telefone" required="true" mask="(99) 99999-9999"
+									requiredMessage="Telefone obrigatório" />
 								<p:message for="telefone" />
 								<h:outputText value="#{medicoBean.med.telefone}" />
 
@@ -93,16 +94,35 @@
 								<p:inputText id="campoEspec" value="#{medicoBean.esp_id_str}"
 									label="especialidade" required="true"
 									requiredMessage="Especialidade obrigatória" />
-<!-- 								<p:selectOneMenu id="campoEspec" -->
-<!-- 									value="#{medicoBean.especialidade}" required="true" converter="especialidadeConverter" converterMessage="Conversao fail"> -->
-<!-- 									<f:selectItem itemValue="" itemLabel="Selecione"/> -->
-<!-- 									<f:selectItems value="#{medicoBean.especialidades}" var="esp" -->
-<!-- 										itemLabel="#{esp.nome}" itemValue="#{esp}" /> -->
-<!-- 								</p:selectOneMenu> -->
-								
+								<!-- 								<p:selectOneMenu id="campoEspec" -->
+								<!-- 									value="#{medicoBean.especialidade}" required="true" converter="especialidadeConverter" converterMessage="Conversao fail"> -->
+								<!-- 									<f:selectItem itemValue="" itemLabel="Selecione"/> -->
+								<!-- 									<f:selectItems value="#{medicoBean.especialidades}" var="esp" -->
+								<!-- 										itemLabel="#{esp.nome}" itemValue="#{esp}" /> -->
+								<!-- 								</p:selectOneMenu> -->
+								<p:commandButton id="overlayBtn" icon="fa fa-search"
+									type="button" />
+								<p:overlayPanel id="Panel" for="overlayBtn" hideEffect="fade">
+									<p:dataTable var="esps" value="#{medicoBean.especialidades}"
+										style="margin-bottom:20px">
+										<f:facet name="header">
+           									Especialidades
+       									</f:facet>
+										<p:column headerText="Id">
+											<h:outputText value="#{esps.id}" />
+										</p:column>
+										<p:column headerText="Nome">
+											<h:outputText value="#{esps.nome}" />
+										</p:column>
+										<p:column headerText="Descrição">
+											<h:outputText value="#{esps.descricao}" />
+										</p:column>
+									</p:dataTable>
+								</p:overlayPanel>
+
 								<p:commandButton id="btnSalvarmed" ajax="false" value="Salvar"
 									actionListener="#{medicoBean.salvarMedico()}" />
-								
+
 							</h:panelGrid>
 
 						</p:panel>
