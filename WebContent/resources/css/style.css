@@ -1,0 +1,20 @@
+@charset "UTF-8";
+.ui-g-12 ui-md-10 ui-g-nopad{
+	position: relative;
+
+}
+
+.ui-g-12 ui-g-nopad{
+	position: absolute;
+	width: 828px;
+	height: 316px;
+	top: 50%;
+	left: 50%;
+	margin-left: -414px;
+	margin-top: -158px;
+	
+}
+
+.ui-g-12 ui-g-nopad, h1{
+	text-align: center;
+}

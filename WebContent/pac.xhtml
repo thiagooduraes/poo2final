@@ -58,8 +58,8 @@
 							<h:panelGrid columns="4" cellpadding="5">
 
 								<p:outputLabel for="cpf" value="CPF: " />
-								<p:inputText id="cpf" value="#{pacienteBean.pac.cpf}"
-									label="cpf" required="true" requiredMessage="CPF obrigatório" />
+								<p:inputMask  id="cpf" value="#{pacienteBean.pac.cpf}"
+								mask="999.999.999-99"	label="cpf" required="true" requiredMessage="CPF obrigatório" />
 								<p:message for="cpf" />
 								<h:outputText value="#{pacienteBean.pac.cpf}" />
 
@@ -77,9 +77,9 @@
 								<h:outputText value="#{pacienteBean.pac.endereco}" />
 
 								<p:outputLabel for="telefone" value="Telefone: " />
-								<p:inputText id="telefone" value="#{pacienteBean.pac.telefone}"
+								<p:inputMask  id="telefone" value="#{pacienteBean.pac.telefone}"
 									label="telefone" required="true"
-									requiredMessage="Telefone obrigatório" />
+									mask="(99) 999-9999" requiredMessage="Telefone obrigatório" />
 								<p:message for="telefone" />
 								<h:outputText value="#{pacienteBean.pac.telefone}" />
 
