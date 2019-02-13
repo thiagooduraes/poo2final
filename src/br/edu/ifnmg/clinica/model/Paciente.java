@@ -1,7 +1,9 @@
 package br.edu.ifnmg.clinica.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
@@ -32,9 +35,11 @@ public class Paciente {
 	private String telefone;
 	@Column(nullable = false)
 	private Date data_nascimento;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
 	@JoinColumn(name = "convenio", nullable = false)
 	private Convenio convenio;
+	@OneToMany(mappedBy= "paciente", cascade=CascadeType.REMOVE)
+	private List<Consulta> consultas;
 
 	public String getCpf() {
 		return cpf;

@@ -1,5 +1,8 @@
 package br.edu.ifnmg.clinica.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
@@ -22,7 +26,7 @@ public class Medico {
 	private Long id;
 	@Column(nullable = false, length = 50)
 	private String crm;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
 	@JoinColumn(name = "especialidade_id", nullable = false)
 	private Especialidade especialidade;
 	@Column(nullable = false, length = 50)
@@ -33,6 +37,8 @@ public class Medico {
 	private String endereco;
 	@Column(nullable = false, length = 15)
 	private String telefone;
+	@OneToMany(mappedBy= "medico", cascade=CascadeType.REMOVE)
+	private List<Consulta> consultas;
 
 	public String getCrm() {
 		return crm;

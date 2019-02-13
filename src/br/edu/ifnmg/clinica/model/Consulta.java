@@ -2,6 +2,7 @@ package br.edu.ifnmg.clinica.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,10 +31,10 @@ public class Consulta {
 	private Double preco;
 	@Column(nullable = false, length = 80)
 	private String tratamento;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
 	@JoinColumn(name = "medico", nullable = false)
 	private Medico medico;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
 	@JoinColumn(name = "paciente", nullable = false)
 	private Paciente paciente;
 

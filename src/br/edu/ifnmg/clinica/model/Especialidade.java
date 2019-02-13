@@ -2,6 +2,7 @@ package br.edu.ifnmg.clinica.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ public class Especialidade implements Comparable<Especialidade>{
 	private String nome;
 	@Column(nullable = false, length = 150)
 	private String descricao;
-	@OneToMany(mappedBy= "especialidade")
+	@OneToMany(mappedBy= "especialidade", cascade=CascadeType.ALL)
 	private List<Medico> medicos;
 
 	public List<Medico> getMedicos() {

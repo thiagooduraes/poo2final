@@ -10,7 +10,8 @@
 		name="webjars/font-awesome/4.4.0/css/font-awesome.css"></h:outputStylesheet>
 </h:head>
 <h:body>
-	<h:form>
+	<h:form id="form">
+		<p:growl id="msgs" showDetail="true" />
 		<div class="ui-fluid">
 			<div class="ui-g" style="margin-top: 20px;">
 				<div class="ui-g-12 ui-md-2">
@@ -62,6 +63,24 @@
 							</p:column>
 							<p:column headerText="Fornecedor">
 								<h:outputText value="#{conv.fornecedor}" />
+							</p:column>
+							
+							<p:column style="width:20px">
+								<p:commandLink title="Remover" id="btnRemover" update=":form:msgs"
+									styleClass="fa fa-remove"
+									action="#{convenioBean.removeConvenio(conv.id)}"
+									style="display:inline-block">
+									<p:confirm header="Confirmação" message="Você deseja excluir?"
+										icon="fa fa-exclamation-triangle" />
+								</p:commandLink>
+
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="Sim" type="button"
+										styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+									<p:commandButton value="Não" type="button"
+										styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+								</p:confirmDialog>
 							</p:column>
 						</p:dataTable>
 					</div>

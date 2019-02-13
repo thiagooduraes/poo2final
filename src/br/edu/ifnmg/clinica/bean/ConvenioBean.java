@@ -87,4 +87,30 @@ public class ConvenioBean {
 //			return null;
 //		}
 	}
+	
+	public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+	
+	public void removeConvenio(Long id) {
+		TypedQuery<Convenio> tq = em.createNamedQuery("findConvenio", Convenio.class);
+		tq.setParameter("id", id);
+		Convenio conve = tq.getSingleResult();
+		if (conve != null) {
+			try {
+				ut.begin();
+				Convenio removida = em.merge(conve);
+				em.remove(removida);
+				ut.commit();
+				addMessage("Excluído", "Dado excluído com sucesso");
+			} catch (SecurityException | IllegalStateException | RollbackException | HeuristicMixedException
+					| HeuristicRollbackException | SystemException | NotSupportedException e) {
+				RequestContext.getCurrentInstance().update("growl");
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Impossível salvar no BD"));
+			}
+		}
+	}
 }

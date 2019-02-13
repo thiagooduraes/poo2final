@@ -1,5 +1,8 @@
 package br.edu.ifnmg.clinica.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
@@ -21,6 +25,8 @@ public class Convenio {
 	private String nome;
 	@Column(nullable = false, length = 80)
 	private String fornecedor;
+	@OneToMany(mappedBy= "convenio", cascade=CascadeType.ALL)
+	private List<Paciente> pacientes;
 
 	public String getNome() {
 		return nome;

@@ -21,7 +21,7 @@ import javax.transaction.UserTransaction;
 import org.primefaces.context.RequestContext;
 
 import br.edu.ifnmg.clinica.model.Convenio;
-import br.edu.ifnmg.clinica.model.Paciente;;
+import br.edu.ifnmg.clinica.model.Paciente;
 
 @ManagedBean
 public class PacienteBean {
@@ -149,6 +149,32 @@ public class PacienteBean {
 		context.addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucess!", "Medico cadastrada com sucesso"));
 		return "pac.xhtml?faces-redirect=true";
+	}
+	
+	public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+	
+	public void removePaciente(Long id) {
+		TypedQuery<Paciente> tq = em.createNamedQuery("findPaciente", Paciente.class);
+		tq.setParameter("id", id);
+		Paciente paci = tq.getSingleResult();
+		if (paci != null) {
+			try {
+				ut.begin();
+				Paciente removida = em.merge(paci);
+				em.remove(removida);
+				ut.commit();
+				addMessage("Excluído", "Dado excluído com sucesso");
+			} catch (SecurityException | IllegalStateException | RollbackException | HeuristicMixedException
+					| HeuristicRollbackException | SystemException | NotSupportedException e) {
+				RequestContext.getCurrentInstance().update("growl");
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Impossível salvar no BD"));
+			}
+		}
 	}
 
 }

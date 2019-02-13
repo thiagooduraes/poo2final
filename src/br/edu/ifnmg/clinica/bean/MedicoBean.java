@@ -187,5 +187,26 @@ public class MedicoBean {
 		FacesMessage msg = new FacesMessage("Edição cancelada", ((Especialidade) event.getObject()).getNome());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
+	
+	public void removeMedico(Long id) {
+		TypedQuery<Medico> tq = em.createNamedQuery("findMedico", Medico.class);
+		tq.setParameter("id", id);
+		Medico medic = tq.getSingleResult();
+		if (medic != null) {
+			try {
+				ut.begin();
+				Medico removida = em.merge(medic);
+				em.remove(removida);
+				ut.commit();
+				addMessage("Excluído", "Dado excluído com sucesso");
+			} catch (SecurityException | IllegalStateException | RollbackException | HeuristicMixedException
+					| HeuristicRollbackException | SystemException | NotSupportedException e) {
+				RequestContext.getCurrentInstance().update("growl");
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Impossível salvar no BD"));
+			}
+		}
+	}
 
 }
